@@ -16,7 +16,7 @@ export default function Hero() {
           nourish both the body and the soul.
         </p>
         <div className="flex gap-4 text-sm">
-          <button className="bg-primary flex uppercase items-center gap-2 text-white px-4 py-2 rounded-full">
+          <button className="bg-primary flex justify-center uppercase items-center gap-2 text-white px-4 py-2 rounded-full">
             Order now
             <span>
               {/* <Right /> */}
@@ -25,7 +25,7 @@ export default function Hero() {
               <FaRegArrowAltCircleRight />
             </span>
           </button>
-          <button className="flex gap-2 py-2 text-gray-600 font-semibold items-center">
+          <button className="flex items-center border-0 gap-2 py-2 text-gray-600 font-semibold">
             Learn more
             <FaRegArrowAltCircleRight />
           </button>
