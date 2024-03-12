@@ -13,13 +13,13 @@ export async function POST(req) {
     }
 
     const file = await data.get("file");
-    console.log("File details:", file);
+    //console.log("File details:", file);
 
     const fileArrayBuffer = await file.arrayBuffer();
     const fileName = `${Date.now()}_${file.name}`;
     const filePath = join(process.cwd(), "public", fileName);
 
-    console.log("File path:", filePath);
+    //console.log("File path:", filePath);
 
     await writeFile(filePath, Buffer.from(fileArrayBuffer));
 
@@ -27,7 +27,7 @@ export async function POST(req) {
       status: 200,
     });
   } catch (error) {
-    console.error("Error uploading file:", error); // Log the error
+    //console.error("Error uploading file:", error); // Log the error
     return new Response(JSON.stringify({ error: "File upload failed" }), {
       status: 500,
     });

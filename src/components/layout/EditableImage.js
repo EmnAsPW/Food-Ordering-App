@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+//import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function EditableImage({ link, setLink }) {
@@ -35,19 +35,17 @@ export default function EditableImage({ link, setLink }) {
   return (
     <>
       {link && (
-        <div className=" w-40 h-20 mb-3">
-          <Image
-            className="rounded-lg w-full h-full mb-1"
-            src={link.link}
-            width={250}
-            height={250}
-            alt={"avatar"}
-          />
-        </div>
+        <Image
+          className="rounded-lg w-full h-full mb-1"
+          src={link.link}
+          width={250}
+          height={250}
+          alt={"avatar"}
+        />
       )}
 
       {!link && (
-        <div className="bg-gray-200 p-4 text-gray rounded-lg mb-1">
+        <div className=" text-center bg-gray-200 p-4 text-gray rounded-lg mb-1">
           No image
         </div>
       )}
@@ -60,6 +58,8 @@ export default function EditableImage({ link, setLink }) {
     </>
   );
 }
+
+//div className=" w-40 h-20 mb-3"
 
 // export default function EditableImage({ link, setLink }) {
 //   async function handleFileChange(ev) {
