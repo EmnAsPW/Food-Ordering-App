@@ -24,8 +24,8 @@ export default function EditMenuItemPage() {
       res.json().then((items) => {
         const item = items.find((i) => i._id === id);
         //setMenuItem(item);
-        //console.log(item);
-        setImage(item.image);
+        //console.log("item...", item.image);
+        setImage({ link: item.image });
         setName(item.name);
         setDescription(item.description);
         setBasePrice(item.basePrice);
@@ -35,10 +35,10 @@ export default function EditMenuItemPage() {
 
   async function handleFormSubmit(ev) {
     ev.preventDefault();
-    const data = { image: image.link, name, description, basePrice };
+    const data = { image: image.link, name, description, basePrice, _id: id };
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/menu-items", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });

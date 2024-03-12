@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export default function EditableImage({ link, setLink }) {
   async function handleFileChange(ev) {
     const files = ev.target.files;
-    //console.log("Files", files);
+    // console.log("link...", link);
     if (files?.length === 1) {
       const data = new FormData();
       //console.log("edit data", data);
@@ -34,7 +34,7 @@ export default function EditableImage({ link, setLink }) {
 
   return (
     <>
-      {link && (
+      {link.link != "" && (
         <Image
           className="rounded-lg w-full h-full mb-1"
           src={link.link}
@@ -44,7 +44,7 @@ export default function EditableImage({ link, setLink }) {
         />
       )}
 
-      {!link && (
+      {link.link == "" && (
         <div className=" text-center bg-gray-200 p-4 text-gray rounded-lg mb-1">
           No image
         </div>
