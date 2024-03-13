@@ -1,5 +1,10 @@
 const { Schema, models, model } = require("mongoose");
 
+const ExtraPriceSchema = new Schema({
+  name: String,
+  price: Number,
+});
+
 const MenuItemSchema = new Schema(
   {
     image: { type: String },
@@ -7,6 +12,8 @@ const MenuItemSchema = new Schema(
 
     description: { type: String },
     basePrice: { type: Number },
+    sizes: { type: [ExtraPriceSchema] },
+    extraIngredientPrices: { type: [ExtraPriceSchema] },
   },
   { timestamps: true }
 );
