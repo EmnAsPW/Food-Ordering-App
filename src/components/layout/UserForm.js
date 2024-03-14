@@ -3,6 +3,7 @@
 import EditableImage from "@/components/layout/EditableImage";
 //import { useProfile } from "@/components/UseProfile";
 import { useState } from "react";
+import { useProfile } from "../UseProfile";
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState(user?.name || "");
@@ -13,6 +14,7 @@ export default function UserForm({ user, onSave }) {
   const [city, setCity] = useState(user?.city || "");
   const [country, setCountry] = useState(user?.country || "");
   const [admin, setAdmin] = useState(user?.admin || false);
+  const { data: loggedInUserData } = useProfile();
   //const [isAdmin, setIsAdmin] = useState(false);
   //const [profileFetched, setProfileFetched] = useState(false);
   return (
@@ -29,6 +31,7 @@ export default function UserForm({ user, onSave }) {
             name: userName,
             image,
             phone,
+            admin,
             streetAddress,
             country,
             postalCode,
@@ -86,12 +89,25 @@ export default function UserForm({ user, onSave }) {
           value={country}
           onChange={(ev) => setCountry(ev.target.value)}
         />
-        {/* <div>
-          <label htmlFor="admincb">
-            <input id="admincb" type="checkbox" />
-            <span>Admin</span>
-          </label>
-        </div> */}
+        {loggedInUserData.admin && (
+          <div>
+            <label
+              className="p-2 inline-flex items-center gap-2  mb-2"
+              htmlFor="admincb"
+            >
+              <input
+                id="admincb"
+                type="checkbox"
+                className=""
+                value={"1"}
+                checked={admin}
+                onClick={(ev) => setAdmin(ev.target.checked)}
+              />
+              <span>Admin</span>
+            </label>
+          </div>
+        )}
+
         <button type="submit">Save</button>
       </form>
     </div>
