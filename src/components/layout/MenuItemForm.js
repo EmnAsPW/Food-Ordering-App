@@ -3,7 +3,7 @@
 import EditableImage from "@/components/layout/EditableImage";
 // import UserTabs from "@/components/layout/UserTabs";
 // import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuItemPriceProps from "./menuItemPriceProps";
 // import toast from "react-hot-toast";
 // import { redirect, useParams } from "next/navigation";
@@ -19,11 +19,21 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
   const [description, setDescription] = useState(menuItem?.description || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
   const [sizes, setSizes] = useState(menuItem?.sizes || []);
+  const [category, setCategory] = useState(menuItem?.category || "");
+  const [categories, setCategories] = useState([]);
   const [extraIngredientPrices, setExtraIngredientPrices] = useState(
     menuItem?.extraIngredientPrices || []
   );
 
-  console.log("menuItem...01", menuItem);
+  //console.log("menuItem...01", menuItem);
+
+  useEffect(() => {
+    fetch("/api/categories").then((res) => {
+      res.json().then((categories) => {
+        setCategories(categories);
+      });
+    });
+  }, []);
 
   return (
     <form
@@ -35,9 +45,10 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
           basePrice,
           sizes,
           extraIngredientPrices,
+          category,
         })
       }
-      className="mt-8 max-w-md mx-auto"
+      className="mt-8 max-w-2xl mx-auto"
     >
       <div
         className="grid items-start gap-4"
@@ -59,6 +70,15 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
             value={description}
             onChange={(ev) => setDescription(ev.target.value)}
           />
+          <label>Category</label>
+          <select
+            value={category}
+            onChange={(ev) => setCategory(ev.target.value)}
+          >
+            {categories?.length > 0 &&
+              categories.map((c) => <option value={c._id}>{c.name}</option>)}
+          </select>
+
           <label>Base price</label>
           <input
             type="text"
