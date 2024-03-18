@@ -1,6 +1,9 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useContext } from "react";
+import { CartContext } from "../AppContext";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 const HeaderCustom = () => {
   const session = useSession();
@@ -8,6 +11,7 @@ const HeaderCustom = () => {
   const status = session?.status;
   const userData = session.data?.user;
   let userName = userData?.name || userData?.email;
+  const { cartProducts } = useContext(CartContext);
 
   if (userName && userName.includes(" ")) {
     userName = userName.split(" ")[0];
@@ -48,6 +52,12 @@ const HeaderCustom = () => {
             </Link>
           </>
         )}
+        <Link href={"/cart"} className="relative">
+          <MdOutlineShoppingCart fontSize={"24px"} />
+          <span className="absolute -top-2 -right-3 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3">
+            {cartProducts.length}
+          </span>
+        </Link>
       </nav>
     </header>
   );

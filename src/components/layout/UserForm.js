@@ -29,7 +29,7 @@ export default function UserForm({ user, onSave }) {
         onSubmit={(ev) =>
           onSave(ev, {
             name: userName,
-            image,
+            image: image.link,
             phone,
             admin,
             streetAddress,
