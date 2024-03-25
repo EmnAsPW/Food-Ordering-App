@@ -3,24 +3,25 @@ import { CartContext, cartProductPrice } from "@/components/AppContext";
 import { useProfile } from "@/components/UseProfile";
 import AddressInputs from "@/components/layout/AddressInputs";
 import SectionHeaders from "@/components/layout/SectionHeaders";
-import Image from "next/image";
+import CartProduct from "@/components/menu/CartProduct";
+//import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { resolve } from "styled-jsx/css";
+//import { RiDeleteBin5Line } from "react-icons/ri";
+//import { resolve } from "styled-jsx/css";
 
 export default function CartPage() {
   const { cartProducts, removeCartProduct } = useContext(CartContext);
   const [address, setAddress] = useState({});
   const { data: profileData } = useProfile();
-  //   useEffect(() => {
-  //     if (typeof window !== "undefined") {
-  //       if (window.location.href.includes("canceled=1")) {
-  //         toast.error("Payment failed 😔");
-  //       }
-  //     }
-  //   }, []);
-  //console.log(profileData);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.href.includes("canceled=1")) {
+        toast.error("Payment failed 😔");
+      }
+    }
+  }, []);
+  console.log(profileData);
 
   useEffect(() => {
     if (profileData?.city) {
@@ -71,7 +72,16 @@ export default function CartPage() {
       error: "Something went wrong... Please try again later",
     });
   }
-  console.log({ cartProducts });
+
+  if (cartProducts?.length === 0) {
+    return (
+      <section className="mt-8 text-center">
+        <SectionHeaders mainHeader="Cart" />
+        <p className="mt-4">Your shopping cart is empty 😔</p>
+      </section>
+    );
+  }
+  //console.log({ cartProducts });
 
   return (
     <section className="mt-8">
@@ -86,45 +96,7 @@ export default function CartPage() {
           )}
           {cartProducts?.length > 0 &&
             cartProducts.map((product, index) => (
-              <div className="flex items-center gap-4 border-b py-4">
-                <div className="w-24">
-                  <Image
-                    width={240}
-                    height={240}
-                    src={product.image}
-                    alt={""}
-                  />
-                </div>
-                <div className="grow">
-                  <h3 className="font-semibold">{product.name}</h3>
-                  {product.size && (
-                    <div className="text-sm ">
-                      Size: <span>{product.size.name}</span>
-                    </div>
-                  )}
-                  {product.extras?.length > 0 && (
-                    <div>
-                      {product.extras.map((extra) => (
-                        <div className="text-sm text-gray-500">
-                          {extra.name} ${extra.price}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="text-lg font-semibold">
-                  ${cartProductPrice(product)}
-                </div>
-                <div className="ml-2">
-                  <button
-                    type="button"
-                    onClick={() => removeCartProduct(index)}
-                    className="p-2"
-                  >
-                    <RiDeleteBin5Line fontSize={"20px"} />
-                  </button>
-                </div>
-              </div>
+              <CartProduct product={product} onRemove={removeCartProduct} />
             ))}
           <div className="py-2 pr-16 flex justify-end items-center">
             <div className="text-gray-500">
